@@ -16,13 +16,27 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 // import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { canteenLogout } from '../../../redux/canteen/canteenTokensReducers';
+import { canteenInfoClear } from '../../../redux/canteen/canteenInfoReducers';
+import { useDispatch} from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(null);
+  const dispatch=useDispatch()
+  const navigate= useNavigate()
+  
+const homeclicks=()=>{
+  toggleMenu()
+  navigate('/canteen')
+};
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+
+
+ const toggleMenu = () => {
+   setIsMenuOpen(!isMenuOpen);
   };
 
   const toggleProfile = (event:any) => {
@@ -32,6 +46,13 @@ const Header = () => {
   const handleCloseProfile = () => {
     setIsProfileOpen(null);
   };
+  
+  const logOut = ()=>{
+     dispatch(canteenLogout())
+     dispatch(canteenInfoClear())
+     console.log('logOut clicked');
+     navigate('/canteen/login')
+  }
 
   return (
     <div>
@@ -46,7 +67,7 @@ const Header = () => {
       </AppBar>
       <Drawer anchor="left" open={isMenuOpen} onClose={toggleMenu}>
         <List style={{ padding: '16px' }}>
-          <ListItem button onClick={toggleMenu}>
+          <ListItem button onClick={homeclicks}>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
@@ -86,7 +107,7 @@ const Header = () => {
         }}
       >
         <MenuItem onClick={handleCloseProfile}>Profile</MenuItem>
-        <MenuItem onClick={handleCloseProfile}>Log out</MenuItem>
+        <MenuItem onClick={logOut}>Log out</MenuItem>
       </Menu>
     </div>
   );

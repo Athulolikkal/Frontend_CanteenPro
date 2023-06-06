@@ -24,3 +24,5 @@ const store = configureStore({
   reducer: persistedReducer,
 });
 export default store;
+
+export type StoreType=typeof store

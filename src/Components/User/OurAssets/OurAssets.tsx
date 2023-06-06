@@ -3,9 +3,14 @@ import {Box,Button,styled,Typography} from '@mui/material';
 import canteenIcon from '../../../assets/images/pngwing.com (1).png'
 import packagesIcon from '../../../assets/images/pngegg (1).png'
 import ArrowRightAltIcon  from '@mui/icons-material/ArrowRightAlt';
+import {useNavigate} from 'react-router-dom'
 
-const onarrowclick=()=>{
-    console.log('its clickedd')
+const viewCanteens=()=>{
+    console.log('its clickedd on viewCanteens')
+}
+
+const viewPackages=()=>{
+    console.log('its clicked on viewPackages');
 }
 
 const OurAssets = () => {
@@ -65,7 +70,7 @@ const OurAssets = () => {
             </Typography>
         </CustomBox>
         <GuidesBox>
-            <GuidBox>
+            <GuidBox onClick={viewCanteens}>
                 <img src={canteenIcon} alt="all canteens" style={{width:'8rem'}} />
                <Typography variant='body2' sx={{fontWeight:'500',fontSize:'20px',color:'#3Bc45',my:1}}>
                    Find All Canteens 
@@ -74,14 +79,14 @@ const OurAssets = () => {
                 <Typography variant='body2' sx={{fontWeight:"bold",fontSize:'14px',color:'#0689FF'}}>
                     View canteens
                 </Typography>
-               <div onClick={onarrowclick}>
+               <div >
                <ArrowRightAltIcon style={{color:'#0689FF'}} />
                </div>
                
                </Box>
             </GuidBox>
 
-            <GuidBox>
+            <GuidBox onClick={viewPackages}>
                 <img src={packagesIcon} alt="all canteens" style={{width:'8rem'}}  />
                <Typography variant='body2' sx={{fontWeight:'500',fontSize:'20px',color:'#3Bc45',my:1}}>
                    Find All Packages
@@ -90,7 +95,7 @@ const OurAssets = () => {
                 <Typography variant='body2' sx={{fontWeight:"bold",fontSize:'14px',color:'#0689FF'}}>
                     View packages
                 </Typography>
-               <div onClick={onarrowclick}>
+               <div >
                <ArrowRightAltIcon style={{color:'#0689FF'}} />
                </div>
                

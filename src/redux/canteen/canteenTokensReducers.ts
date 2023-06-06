@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface Token {
-  canteenAccessToken: string | null;
-  canteenRefreshToken: string | null;
+export interface Token {
+  
+  canteenAccessToken: string | undefined;
+  canteenRefreshToken: string | undefined;
 }
 
 const initialState: Token = {
-  canteenAccessToken: null,
-  canteenRefreshToken: null,
+  canteenAccessToken: undefined,
+  canteenRefreshToken: undefined,
 };
 
 const canteenTokens = createSlice({
@@ -18,7 +19,7 @@ const canteenTokens = createSlice({
       return action.payload;
     },
     canteenLogout: () => {
-      return undefined;
+      return initialState;
     },
   },
 });

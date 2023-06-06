@@ -1,4 +1,4 @@
-import React from 'react'
+
 import {Box, Typography,Grid} from '@mui/material'
 import {Customcontainer,CustomButton,BookingButton,CustomBox,ButtonContainer,TextContainer,CustomBoxText} from './Style'
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';

@@ -15,18 +15,36 @@ const CanteenLayout = React.lazy(() => import('./Components/Canteen/Layout/Layou
 const AddPackages = React.lazy(() => import('./Pages/Canteen/AddPackages'))
 const CanteenLogin = React.lazy(() => import('./Pages/Canteen/CanteenLoginPage'))
 const CanteenSignUp = React.lazy(() => import('./Pages/Canteen/CanteenSignupPage'))
+const CanteenHome = React.lazy(() => import('./Pages/Canteen/CanteenHome'))
+const PackageView = React.lazy(() => import('./Components/Canteen/Packageview/PackageView'))
+const UserPackageview = React.lazy(() => import('./Components/User/UserPackageView/PackageView'))
+
 import { isUser } from './redux/user/userdataReducer'
+import { addCanteenTokens } from './redux/canteen/canteenTokensReducers'
+
+interface storeType {
+  canteenTokens?: {
+    canteenAccessToken?: ''
+    canteenRefreshToken?: ''
+  }
+  userdata?: ''
+}
+
 
 
 function App() {
 
   // const userIs =localStorage.getItem('userAccessToken')
-  const user = useSelector((state: any) => state.userdata)
-
+  const user = useSelector((state: storeType) => state.userdata)
+  const canteen = useSelector((state: storeType) => state?.canteenTokens)
+  const isCanteen = canteen?.canteenAccessToken
+  console.log(isCanteen, 'canteenaccessToken');
+  console.log(canteen, 'canteen')
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(isUser(user));
+    dispatch(addCanteenTokens(canteen))
   }, [dispatch]);
 
 
@@ -50,25 +68,28 @@ function App() {
             <Route path='/' element={user ? (<React.Suspense fallback={<LoadingPage />} ><UserLayout /></React.Suspense>) : (<Navigate to='/user/landingpage' replace={true} />)}>
               <Route index element={<React.Suspense fallback={<LoadingPage />}><UserHomePage /></React.Suspense>} />
               <Route path="user/onwish" element={<React.Suspense fallback={<LoadingPage />}><OnMyWish /></React.Suspense>} />
-
-
+              <Route path='view/:packageId' element={<React.Suspense fallback={<LoadingPage />}><UserPackageview /></React.Suspense>} />
             </Route>
             {/*-----------------------------------//userlayout-end----------------------------*/}
 
 
 
-            <Route path='/canteen/login' element={<React.Suspense fallback={<LoadingPage />}><CanteenLogin/></React.Suspense>}/>
-            <Route path='/canteen/signup' element={<React.Suspense fallback={<LoadingPage />}><CanteenSignUp/></React.Suspense>}/>
-           
+
+            <Route path='/canteen/login' element={isCanteen ? (<Navigate to='/canteen' replace={true} />) : (<React.Suspense fallback={<LoadingPage />}><CanteenLogin /></React.Suspense>)} />
+            <Route path='/canteen/signup' element={isCanteen ? (<Navigate to='/canteen' replace={true} />) : (<React.Suspense fallback={<LoadingPage />}><CanteenSignUp /></React.Suspense>)} />
+
             {/* ----------------------------------Canteen_Layout_Starts----------------------------- */}
 
-            <Route path='/canteen' element={<React.Suspense fallback={<LoadingPage />}><CanteenLayout /></React.Suspense>}>
+            <Route path='/canteen' element={isCanteen ? (<React.Suspense fallback={<LoadingPage />}><CanteenLayout /></React.Suspense>) : (<Navigate to='/canteen/login' />)}>
+              <Route index element={<React.Suspense fallback={<LoadingPage />}><CanteenHome /></React.Suspense>} />
               <Route path='addpackages' element={<React.Suspense fallback={<LoadingPage />}><AddPackages /></React.Suspense>} />
+              <Route path='view/:packageId' element={<React.Suspense fallback={<LoadingPage />}><PackageView /></React.Suspense>} />
             </Route>
             {/* ----------------------------//canteen_layout_ends---------------------------------------- */}
 
-
+            
             <Route path='*' element={<PageNotFound />} />
+          
 
           </Routes>
 

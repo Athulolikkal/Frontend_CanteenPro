@@ -1,10 +1,18 @@
-
-import { TextField, Button, Grid, Typography, Box, } from '@mui/material';
+import { useState } from 'react'
+import { TextField, Button, Grid, Typography, Box, FormControlLabel, } from '@mui/material';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { StyledForm, ContainerBox } from './style'
+
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+
+
 import axios from '../../../Axios/axios'
 import Axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Category } from '@mui/icons-material';
 
 interface formValues {
   BreakfastMainCourses: string,
@@ -26,9 +34,25 @@ interface formValues {
   DinnerRateperDay: number | string,
   DinnerRateperMonth: number | string,
   Total: number | string,
-  image: FileList | null | undefined;
+  image?: FileList | null | undefined;
 }
 
+interface storeType {
+  canteenInfo?: {
+    canteenId?: '',
+    canteenName?: '',
+    canteenemail?: ''
+  }
+}
+
+interface packageType {
+  mainCourse?: string[],
+  sideCourse?: string[],
+  specials?: string[],
+  availableTime?: number | string | TimeRanges,
+  ratePerDay?: number | string,
+  ratePerMonth?: number | string,
+}
 
 const validationSchema = {
 
@@ -45,21 +69,33 @@ const validationSchema = {
     value: 100,
     message: "Maximum hundred letters",
   },
+  validateField: (value: string) => {
+    if (value && value.endsWith(',')) {
+      return "Field value should not end with a comma";
+    }
+    return true;
+  }
 };
 
 
 const ResponsiveForm = () => {
+  const [category, setCategory] = useState('veg')
+  const canteenDetails = useSelector((state: storeType) => state.canteenInfo)
+  const navigate = useNavigate()
   const form = useForm<formValues>()
   const { register, handleSubmit, formState, watch } = form;
   const { errors } = formState;
 
+
   const onSubmit: SubmitHandler<formValues> = async (data) => {
     console.log(data, ':is');
-
+    console.log(category,'category is that');
+    
     const file = data?.image?.[0]
     console.log(file)
     if (file) {
       try {
+        //geting the permission URL
         const response = await axios.get('/service/s3service')
         const url = response?.data?.url
         console.log(url);
@@ -73,11 +109,53 @@ const ResponsiveForm = () => {
 
 
 
+        const breakfast: packageType = {
+          mainCourse: data?.BreakfastMainCourses.split(','),
+          sideCourse: data?.BreakfastSideCourses.split(','),
+          specials: data?.BreakfastSpecials.split(','),
+          availableTime: data?.BreakfastAvailableTime,
+          ratePerDay: data?.BreakfastRateperDay,
+          ratePerMonth: data?.BreakfastRateperMonth,
+        }
+        const lunch: packageType = {
+          mainCourse: data?.LunchMainCourses.split(','),
+          sideCourse: data?.LunchSideCourses.split(','),
+          specials: data?.LunchSpecials.split(','),
+          availableTime: data?.LunchAvailableTime,
+          ratePerDay: data?.LunchRateperDay,
+          ratePerMonth: data?.LunchRateperMonth,
+        }
+        const dinner: packageType = {
+          mainCourse: data?.DinnerMainCourses.split(','),
+          sideCourse: data?.DinnerSideCourses.split(','),
+          specials: data?.DinnerSpecials.split(','),
+          availableTime: data?.DinnerAvailableTime,
+          ratePerDay: data?.DinnerRateperDay,
+          ratePerMonth: data?.DinnerRateperMonth,
+        }
+        // const category:string = category
+        const image: string = imageUrl
+        const total: any = data?.Total
+        const cate:string =category
+        const canteenId: any = canteenDetails?.canteenId
+
+        const packageDetails = { breakfast, lunch, dinner, image, total,cate,canteenId }
+        console.log(packageDetails, 'package details');
+
+        await axios.post('/canteen/addpackages', packageDetails).then((response) => {
+          console.log(response)
+          toast.success("successfully added your package.....")
+          setTimeout(() => {
+            navigate('/canteen')
+          }, 1000)
+        })
+
       } catch (err) {
+        toast.error("An error occured...... Do after some time.......")
         console.log(err)
       }
     } else {
-      toast.error("add an image")
+      toast.error("You missed to add an image!")
     }
 
   };
@@ -103,7 +181,7 @@ const ResponsiveForm = () => {
                 variant="outlined"
                 fullWidth={true}
                 type='text'
-                {...register('BreakfastMainCourses', validationSchema)}
+                {...register('BreakfastMainCourses', { ...validationSchema, validate: validationSchema.validateField })}
                 error={!!errors.BreakfastMainCourses}
                 helperText={errors?.BreakfastMainCourses?.message}
 
@@ -115,7 +193,7 @@ const ResponsiveForm = () => {
                 label="BreakfastSideCourses"
                 variant="outlined"
                 fullWidth={true}
-                {...register('BreakfastSideCourses', validationSchema)}
+                {...register('BreakfastSideCourses', { ...validationSchema, validate: validationSchema.validateField })}
                 error={!!errors.BreakfastSideCourses}
                 helperText={errors?.BreakfastSideCourses?.message}
               />
@@ -126,7 +204,7 @@ const ResponsiveForm = () => {
                 label="BreakfastSpecials"
                 variant="outlined"
                 fullWidth={true}
-                {...register('BreakfastSpecials', validationSchema)}
+                {...register('BreakfastSpecials', { ...validationSchema, validate: validationSchema.validateField })}
                 error={!!errors.BreakfastSpecials}
                 helperText={errors?.BreakfastSpecials?.message}
 
@@ -191,7 +269,7 @@ const ResponsiveForm = () => {
                 label="LunchMainCourses"
                 variant="outlined"
                 fullWidth={true}
-                {...register("LunchMainCourses", validationSchema)}
+                {...register("LunchMainCourses", { ...validationSchema, validate: validationSchema.validateField })}
                 error={!!errors.LunchMainCourses}
                 helperText={errors?.LunchMainCourses?.message}
 
@@ -203,7 +281,7 @@ const ResponsiveForm = () => {
                 label="LunchSideCourses"
                 variant="outlined"
                 fullWidth={true}
-                {...register("LunchSideCourses", validationSchema)}
+                {...register("LunchSideCourses", { ...validationSchema, validate: validationSchema.validateField })}
                 error={!!errors.LunchSideCourses}
                 helperText={errors?.LunchSideCourses?.message}
               />
@@ -214,7 +292,7 @@ const ResponsiveForm = () => {
                 label="LunchSpecials"
                 variant="outlined"
                 fullWidth={true}
-                {...register("LunchSpecials", validationSchema)}
+                {...register("LunchSpecials", { ...validationSchema, validate: validationSchema.validateField })}
                 error={!!errors.LunchSpecials}
                 helperText={errors?.LunchSpecials?.message}
 
@@ -277,7 +355,7 @@ const ResponsiveForm = () => {
                 label="DinnerMainCourses"
                 variant="outlined"
                 fullWidth={true}
-                {...register("DinnerMainCourses", validationSchema)}
+                {...register("DinnerMainCourses", { ...validationSchema, validate: validationSchema.validateField })}
                 error={!!errors.DinnerMainCourses}
                 helperText={errors?.DinnerMainCourses?.message}
 
@@ -289,7 +367,7 @@ const ResponsiveForm = () => {
                 label="DinnerSideCourses"
                 variant="outlined"
                 fullWidth={true}
-                {...register("DinnerSideCourses", validationSchema)}
+                {...register("DinnerSideCourses", { ...validationSchema, validate: validationSchema.validateField })}
                 error={!!errors.DinnerSideCourses}
                 helperText={errors?.DinnerSideCourses?.message}
 
@@ -301,7 +379,7 @@ const ResponsiveForm = () => {
                 label="DinnerSpecials"
                 variant="outlined"
                 fullWidth={true}
-                {...register("DinnerSpecials", validationSchema)}
+                {...register("DinnerSpecials", { ...validationSchema, validate: validationSchema.validateField })}
                 error={!!errors.DinnerSpecials}
                 helperText={errors?.DinnerSpecials?.message}
 
@@ -359,8 +437,32 @@ const ResponsiveForm = () => {
 
               />
             </Grid>
+
           </Grid >
         </ContainerBox>
+
+        <Grid container spacing={2} sx={{ mt: 3 }}>
+          <Grid item xs={12} sm={6}>
+            <RadioGroup
+              name="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              row
+            >
+              <FormControlLabel
+                value="veg"
+                control={<Radio />}
+                label="Veg"
+              />
+              <FormControlLabel
+                value="nonveg"
+                control={<Radio />}
+                label="Non-Veg"
+              />
+            </RadioGroup>
+          </Grid>
+        </Grid>
+
 
         <TextField label='Total' variant="outlined" fullWidth={true} placeholder='Enter the total amount for the package' sx={{ mt: 3 }}
           {...register('Total', {

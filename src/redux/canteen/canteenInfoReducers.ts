@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface canteenData{
-    canteenId:string | null,
-    canteenName:string | null,
-    canteenemail:string | null
+    canteenId:string | undefined,
+    canteenName:string | undefined,
+    email:string | undefined,
+    image: string | undefined
 }
 
 const initialState:canteenData ={
-    canteenId:null,
-    canteenName:null,
-    canteenemail:null
+    canteenId:undefined,
+    canteenName:undefined,
+    email:undefined,
+    image:undefined
+    
 }
 
 const canteenInfo = createSlice({
@@ -19,11 +22,11 @@ const canteenInfo = createSlice({
         addCanteenInfo:(state,action)=>{
             return action.payload
         },
-        canteenLogout:()=>{
-            return undefined
+        canteenInfoClear:()=>{
+            return initialState
         }
     }
 });
 
-export const {addCanteenInfo,canteenLogout}= canteenInfo.actions;
+export const {addCanteenInfo,canteenInfoClear}= canteenInfo.actions;
 export default canteenInfo.reducer;

@@ -1,45 +1,125 @@
-
-import {Box,Container,Typography} from '@mui/material';
+import  { useEffect, useState } from 'react'
+import { Box, Container, Typography } from '@mui/material';
 import RowPost from '../../User/RowPost/RowPost';
-import {ListItems} from './ListItems'
-import {PropertiesBox,PropertiesTextBox,} from './Style'
 
+import { PropertiesBox, PropertiesTextBox, } from './Style'
+import axios from '../../../Axios/axios';
+import { PackageItem } from '../../../types';
 
 
 
 
 const PackagesList = () => {
- 
-    return (
-    <Box sx={{mt:5,backgroundColor:'#F5FAFE',py:10}}>
-        <Container>
-            <PropertiesTextBox>
-                <Typography sx={{color:'#000339',fontSize:'35px',fontWeight:'bold'}}>
-                    Our Plans
-                </Typography>
-                <Typography sx={{color:'#5A6473',fontSize:'16px',fontWeight:'bold',mt:1}}>
-                   Every packages you looking for is here.........!
-                </Typography>
-            </PropertiesTextBox>
-            <PropertiesBox>
-                {
-                    ListItems.map((property)=>
-                        (
-                           <RowPost 
-                               key={property.id} 
-                               img={property.img}
-                               name={property.name}
-                               price={property.price}
-                               cate={property.cate}
-                                />
-                        )
-                    )
-                }
-            </PropertiesBox>
-        </Container>
+    const [allPakckages, setAllpackages] = useState<PackageItem[]>([]);
 
-    </Box>
-  )
+    useEffect(() => {
+        const getAllPackages = async () => {
+            try {
+                const allPackages = await axios.get('canteen/allpackages')
+                console.log(allPackages.data.response);
+                const packages = allPackages.data.response
+                packages ? setAllpackages(packages) : setAllpackages([])
+            } catch (err) {
+                console.log(err, 'error on fetching all packages');
+            }
+        }
+
+        getAllPackages();
+    }, [])
+
+    const vegItems = allPakckages.filter((item) => item?.category === 'veg')
+    const nonVegItems = allPakckages.filter((item) => item?.category === 'nonveg')
+    const premiumPackages = allPakckages.filter((item) => item?.total !== undefined && item?.total > 3500);
+
+
+
+    return (
+        <Box sx={{ mt: 5, backgroundColor: '#F5FAFE', py: 10 }}>
+            <Container>
+                <PropertiesTextBox>
+                    <Typography sx={{ color: '#000339', fontSize: '45px', fontWeight: 'bold' }}>
+                        Our Plans
+                    </Typography>
+                    <Typography sx={{ color: '#5A6473', fontSize: '16px', fontWeight: 'bold', mt: 1 }}>
+                        Every packages you looking for is here.........!
+                    </Typography>
+                </PropertiesTextBox>
+
+                <Typography sx={{ color: '#000339', fontSize: '25px', fontWeight: 'bold', textAlign: 'center', mt: 8 }}>
+                    Non-Veg Packages
+                </Typography>
+
+                <PropertiesBox>
+                    {
+                        nonVegItems.map((property) =>
+                        (
+                            <RowPost
+                                packageId={property._id}
+                                img={property?.image}
+                                name={property?.canteenId?.canteenName}
+                                city={property?.canteenId?.city}
+                                price={property?.total}
+                                category={property?.category}
+                            />
+                        )
+                        )
+                    }
+                </PropertiesBox>
+
+                <Typography sx={{ color: '#000339', fontSize: '25px', fontWeight: 'bold', textAlign: 'center', mt: 8 }}>
+                    Veg Packages
+                </Typography>
+
+                <PropertiesBox>
+                    {
+                        vegItems.map((property) =>
+                        (
+                            <RowPost
+                                packageId={property._id}
+                                img={property?.image}
+                                name={property?.canteenId?.canteenName}
+                                city={property?.canteenId?.city}
+                                price={property?.total}
+                                category={property?.category}
+                            />
+                        )
+                        )
+                    }
+                </PropertiesBox>
+
+                <Typography sx={{ color: '#000339', fontSize: '25px', fontWeight: 'bold', textAlign: 'center', mt: 8 }}>
+                    Premium Packages
+                </Typography>
+
+                <PropertiesBox>
+                    {
+                        premiumPackages.map((property) =>
+                        (
+                            <RowPost
+                                packageId={property._id}
+                                img={property?.image}
+                                name={property?.canteenId?.canteenName}
+                                city={property?.canteenId?.city}
+                                price={property?.total}
+                                category={property?.category}
+                            />
+                        )
+                        )
+                    }
+                </PropertiesBox>
+
+
+
+
+
+
+
+
+
+            </Container>
+
+        </Box>
+    )
 }
 
 export default PackagesList
