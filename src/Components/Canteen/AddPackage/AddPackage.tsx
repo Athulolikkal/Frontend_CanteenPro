@@ -154,6 +154,7 @@ const ResponsiveForm = () => {
         toast.error("An error occured...... Do after some time.......")
         console.log(err)
       }
+      
     } else {
       toast.error("You missed to add an image!")
     }

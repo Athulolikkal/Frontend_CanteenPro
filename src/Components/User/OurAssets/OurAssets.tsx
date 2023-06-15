@@ -5,16 +5,26 @@ import packagesIcon from '../../../assets/images/pngegg (1).png'
 import ArrowRightAltIcon  from '@mui/icons-material/ArrowRightAlt';
 import {useNavigate} from 'react-router-dom'
 
-const viewCanteens=()=>{
-    console.log('its clickedd on viewCanteens')
-}
 
-const viewPackages=()=>{
-    console.log('its clicked on viewPackages');
-}
 
 const OurAssets = () => {
- const CustomBox=styled(Box)(({theme})=>({
+ 
+const navigate=useNavigate()
+
+    const viewCanteens=()=>{
+        console.log('its clickedd on viewCanteens')
+        navigate('/user/showallcanteens')
+
+    }
+    
+    const viewPackages=()=>{
+        console.log('its clicked on viewPackages');
+        navigate('/user/showallpackages')
+    }
+ 
+ 
+ 
+    const CustomBox=styled(Box)(({theme})=>({
     width:'30%',
     [theme.breakpoints.down('md')]:{
         width:'85%'

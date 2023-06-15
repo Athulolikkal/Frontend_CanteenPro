@@ -36,8 +36,9 @@ const PackageListing: React.FC<Props> = ({ packageId, canteenId, total, canteenN
   }
 
   return (
+    
     <Box sx={{ maxWidth: '100%' }}>
-
+          
       <Customcontainer style={{ opacity: isStatus ? 0.9 : 0.4 }}>
 
         <TextContainer>
@@ -62,11 +63,11 @@ const PackageListing: React.FC<Props> = ({ packageId, canteenId, total, canteenN
               <CurrencyRupeeIcon fontSize='small' /> {total}
             </Typography>
 
+            
 
-
-            <Typography sx={{ fontSize: '16px', fontWeight: '600', marginBottom: 1, color: '#A0A7AB ' }}>
+           {isStatus?<Typography sx={{ fontSize: '16px', fontWeight: '600', marginBottom: 1, color: '#A0A7AB ' }}>
               {canteenName}
-            </Typography>
+            </Typography>:<Typography sx={{textAlign:'center',color:'red',fontWeight:700,mt:2}}>Removed from user view <br /><span style={{color:'green',fontWeight:400}}>click add to get user view</span></Typography>}
           </CustomBoxText>
         </TextContainer>
 

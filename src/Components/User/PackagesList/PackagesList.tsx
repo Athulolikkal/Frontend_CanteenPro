@@ -1,7 +1,6 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Container, Typography } from '@mui/material';
 import RowPost from '../../User/RowPost/RowPost';
-
 import { PropertiesBox, PropertiesTextBox, } from './Style'
 import axios from '../../../Axios/axios';
 import { PackageItem } from '../../../types';

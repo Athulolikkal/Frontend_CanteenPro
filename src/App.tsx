@@ -18,6 +18,9 @@ const CanteenSignUp = React.lazy(() => import('./Pages/Canteen/CanteenSignupPage
 const CanteenHome = React.lazy(() => import('./Pages/Canteen/CanteenHome'))
 const PackageView = React.lazy(() => import('./Components/Canteen/Packageview/PackageView'))
 const UserPackageview = React.lazy(() => import('./Components/User/UserPackageView/PackageView'))
+const ShowAllCanteens = React.lazy(() => import('./Components/User/ShowAllCanteens/ShowAllCanteens'))
+const ShowAllPackages = React.lazy(() => import('./Components/User/ShowAllPackages/ShowAllPackages'))
+const BuildCanteen =React.lazy(()=>import ('./Pages/User/BuildCanteen'))
 
 import { isUser } from './redux/user/userdataReducer'
 import { addCanteenTokens } from './redux/canteen/canteenTokensReducers'
@@ -69,6 +72,10 @@ function App() {
               <Route index element={<React.Suspense fallback={<LoadingPage />}><UserHomePage /></React.Suspense>} />
               <Route path="user/onwish" element={<React.Suspense fallback={<LoadingPage />}><OnMyWish /></React.Suspense>} />
               <Route path='view/:packageId' element={<React.Suspense fallback={<LoadingPage />}><UserPackageview /></React.Suspense>} />
+              <Route path='user/showallcanteens' element={<React.Suspense fallback={<LoadingPage />}><ShowAllCanteens/></React.Suspense>} />
+              <Route path='user/showallpackages' element={<React.Suspense fallback={<LoadingPage />}><ShowAllPackages /></React.Suspense>} />
+              <Route path='user/buildcanteen' element={<React.Suspense fallback={<LoadingPage />}><BuildCanteen/></React.Suspense>} />
+          
             </Route>
             {/*-----------------------------------//userlayout-end----------------------------*/}
 

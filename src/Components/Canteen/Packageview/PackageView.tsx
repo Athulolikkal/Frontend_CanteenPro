@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../../../Axios/axios'
 import { PackageItem } from '../../../types';
 import { Box, Container, Typography, Button, Stack } from '@mui/material';
 import { PackageBox, WrapperContainer, ContainerBox, DetailsBox, CourseType } from './Style'
 
+
 const PackageView = () => {
   const { packageId } = useParams();
   const [packageDetails, setPackageDetails] = useState<PackageItem>({})
-
+  const navigate = useNavigate()
   useEffect(() => {
     const handleview = async () => {
       console.log(packageId, ':key')
@@ -16,6 +17,7 @@ const PackageView = () => {
         const response = await axios.get('/canteen/viewpackge?id=' + packageId)
 
         setPackageDetails(response?.data?.response)
+
       } catch (err) {
         console.log(err);
       }
@@ -23,6 +25,10 @@ const PackageView = () => {
     }
     handleview()
   }, [])
+
+  if (packageDetails === undefined || null) {
+    navigate('*')
+  }
 
   const breakfastMainCourse = packageDetails?.breakfast?.mainCourse.toString()
   const breakfastSideCourse = packageDetails?.breakfast?.sideCourse.toString()
@@ -123,12 +129,12 @@ const PackageView = () => {
           </DetailsBox>
         </PackageBox>
       </WrapperContainer>
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4, height: 50,marginBottom: 4 }}>
-        <Box sx={{ width: '90%', backgroundColor: '#4B6190',borderRadius: '10px'}}>
-          <CourseType sx={{ padding: 2, color: '#E4E4E4',fontSize:'20px', fontWeight: 'bold' }}>
-              <span style={{ color: 'white', fontWeight: 'bold', marginRight: '3px' }}>Total Amount PerMonth:</span>
-              {packageDetails?.total}
-            </CourseType>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4, height: 50, marginBottom: 4 }}>
+        <Box sx={{ width: '90%', backgroundColor: '#4B6190', borderRadius: '10px' }}>
+          <CourseType sx={{ padding: 2, color: '#E4E4E4', fontSize: '20px', fontWeight: 'bold' }}>
+            <span style={{ color: 'white', fontWeight: 'bold', marginRight: '3px' }}>Total Amount PerMonth:</span>
+            {packageDetails?.total}
+          </CourseType>
         </Box>
       </Box>
 

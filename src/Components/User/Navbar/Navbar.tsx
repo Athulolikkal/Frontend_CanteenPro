@@ -51,7 +51,7 @@ const Navbar = () => {
                 console.log('home clicked');
 
             } else if (text === 'Build-Canteen') {
-                console.log('Build-Canteen clicked');
+                navigate('/user/buildcanteen');
             }
             else if (text === 'On-My-Wish') {
                 navigate('/user/onwish')
@@ -98,7 +98,7 @@ const Navbar = () => {
                 <NavbarLinksBox>
                     <NavLink variant='body2' onClick={() => navigate('/')}>Home</NavLink>
                     <NavLink variant='body2' onClick={() => navigate('/user/onwish')}>On-My-Wish</NavLink>
-                    <NavLink variant='body2'  >Build-Canteen</NavLink>
+                    <NavLink variant='body2' onClick={()=> navigate('/user/buildcanteen')}>Build-Canteen</NavLink>
                 </NavbarLinksBox>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
