@@ -2,13 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userDataSlice = createSlice({
   name: "user",
-  initialState: "",
+  initialState:'',
   reducers: {
     isUser: (state, action) => {
       return action.payload;
     },
     logout: () => {
-      return "";
+      return '';
     },
   },
 });

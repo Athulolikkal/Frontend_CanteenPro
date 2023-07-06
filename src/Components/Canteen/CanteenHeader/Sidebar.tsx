@@ -1,5 +1,5 @@
-import  { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
+import { useEffect, useState } from 'react';
+import { AppBar, Box } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -18,51 +18,78 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { canteenLogout } from '../../../redux/canteen/canteenTokensReducers';
 import { canteenInfoClear } from '../../../redux/canteen/canteenInfoReducers';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { height } from '@mui/system';
+import axios from '../../../Axios/axios'
 
+interface storeType {
+  canteenInfo?: {
+    canteenId?: ''
+    canteenName?: ''
+    email?: '',
+    image?: ''
+  }
+}
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(null);
-  const dispatch=useDispatch()
-  const navigate= useNavigate()
-  
-const homeclicks=()=>{
-  toggleMenu()
-  navigate('/canteen')
-};
+  const canteen = useSelector((state: storeType) => state?.canteenInfo)
+  const canteenImage = canteen?.image
+  const canteenId=canteen?.canteenId
+  const [image, setImage] = useState(canteenImage)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
+  const getuserDetails = async () => {
+    const userDetails = await axios.get(`/allcanteen/canteendetails?canteenId=${canteenId}`)
+    setImage(userDetails?.data?.image)
+  }
 
-
- const toggleMenu = () => {
-   setIsMenuOpen(!isMenuOpen);
+  const homeclicks = () => {
+    toggleMenu()
+    navigate('/canteen')
   };
 
-  const toggleProfile = (event:any) => {
+ useEffect(()=>{
+  getuserDetails()
+ },[])
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleProfile = (event: any) => {
     setIsProfileOpen(event.currentTarget);
   };
 
   const handleCloseProfile = () => {
     setIsProfileOpen(null);
   };
-  
-  const logOut = ()=>{
-     dispatch(canteenLogout())
-     dispatch(canteenInfoClear())
-     console.log('logOut clicked');
-     navigate('/canteen/login')
+
+  const logOut = () => {
+    dispatch(canteenLogout())
+    dispatch(canteenInfoClear())
+    console.log('logOut clicked');
+    navigate('/canteen/login')
   }
 
   return (
     <div>
-      <AppBar position="static" sx={{background:'#4B6190'}}>
+      <AppBar position="static" sx={{ background: '#4B6190' }}>
         <Toolbar>
           <IconButton edge="start" color="inherit" onClick={toggleMenu}>
             <MenuIcon />
           </IconButton>
           <div style={{ flexGrow: 1 }}></div>
-          <Avatar alt="Profile Image" src="" onClick={toggleProfile} />
+          {/* <Avatar alt="Profile Image" src="" onClick={toggleProfile} /> */}
+          <Box onClick={toggleProfile}>
+            {image ? <img src={image} alt="profileimage" loading='lazy' style={{ height: '50px', width: '50px', borderRadius: '50%', cursor: 'pointer', border: "2px solid white" }} /> :
+              <Avatar alt="Profile Image" src="" onClick={toggleProfile} style={{ cursor: 'pointer' }} />}
+
+          </Box>
+
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={isMenuOpen} onClose={toggleMenu}>
@@ -77,19 +104,21 @@ const homeclicks=()=>{
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary="Profile" onClick={()=>console.log('profile clicked')} />
+            <ListItemText primary="DashBoard" onClick={() => navigate('/canteen/dashboard')} />
           </ListItem>
-          <ListItem button onClick={toggleMenu}>
+          {/* <ListItem button onClick={toggleMenu}>
             <ListItemIcon>
               <PeopleIcon />
+
             </ListItemIcon>
             <ListItemText primary="Users" />
-          </ListItem>
+          </ListItem> */}
           <ListItem button onClick={toggleMenu}>
             <ListItemIcon>
               <AssignmentIcon />
+
             </ListItemIcon>
-            <ListItemText primary="Orders" />
+            <ListItemText primary="Orders" onClick={() => navigate('/canteen/canteenallbookings')} />
           </ListItem>
         </List>
       </Drawer>
@@ -106,7 +135,7 @@ const homeclicks=()=>{
           horizontal: 'right',
         }}
       >
-        <MenuItem onClick={handleCloseProfile}>Profile</MenuItem>
+        {/* <MenuItem onClick={handleCloseProfile}>Profile</MenuItem> */}
         <MenuItem onClick={logOut}>Log out</MenuItem>
       </Menu>
     </div>

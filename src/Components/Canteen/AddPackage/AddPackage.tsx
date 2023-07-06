@@ -89,8 +89,8 @@ const ResponsiveForm = () => {
 
   const onSubmit: SubmitHandler<formValues> = async (data) => {
     console.log(data, ':is');
-    console.log(category,'category is that');
-    
+    console.log(category, 'category is that');
+
     const file = data?.image?.[0]
     console.log(file)
     if (file) {
@@ -136,10 +136,10 @@ const ResponsiveForm = () => {
         // const category:string = category
         const image: string = imageUrl
         const total: any = data?.Total
-        const cate:string =category
+        const cate: string = category
         const canteenId: any = canteenDetails?.canteenId
 
-        const packageDetails = { breakfast, lunch, dinner, image, total,cate,canteenId }
+        const packageDetails = { breakfast, lunch, dinner, image, total, cate, canteenId }
         console.log(packageDetails, 'package details');
 
         await axios.post('/canteen/addpackages', packageDetails).then((response) => {
@@ -154,7 +154,7 @@ const ResponsiveForm = () => {
         toast.error("An error occured...... Do after some time.......")
         console.log(err)
       }
-      
+
     } else {
       toast.error("You missed to add an image!")
     }

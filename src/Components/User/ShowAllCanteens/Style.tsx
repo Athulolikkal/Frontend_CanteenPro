@@ -122,6 +122,7 @@ export const CustomBoxText=styled(Box)(({theme})=>({
    paddingLeft:'2rem',
    paddingRight:'2rem',
    
+   
    [theme.breakpoints.down('sm')]: {
       
       paddingLeft:'0rem',

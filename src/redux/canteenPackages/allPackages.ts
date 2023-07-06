@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../Axios/axios";
 import { PackageItem } from "../../types";
 
+
 const getAllPackages = createAsyncThunk(
   "api/allpackags",
   ({

@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface UserData {
-  userId: string | null;
-  name: string | null;
-  email: string | null;
+  userId: string | undefined;
+  name: string | undefined;
+  email: string | undefined;
 }
 
 const initialState: UserData = {
-  userId: null,
-  name: null,
-  email: null,
+  userId: undefined,
+  name: undefined,
+  email: undefined,
 };
 
 const userInfo = createSlice({

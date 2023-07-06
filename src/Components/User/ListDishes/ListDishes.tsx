@@ -167,23 +167,23 @@ const RecipeReviewCard: React.FC<Props> = ({
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-        <Tooltip title="click here to add this ">
-          <IconButton aria-label="add to favorites"
-            onClick={() => addCategorizedPackageToFaviorite(
-              packageId,
-              canteenName,
-              mainCourse,
-              sideCourse,
-              specials,
-              availableTime,
-              ratePerDay,
-              ratePerMonth,
-              category,
-              image,
-              city,
-                    )}>
-             <AddIcon />
-          </IconButton>
+          <Tooltip title="click here to add this ">
+            <IconButton aria-label="add to favorites"
+              onClick={() => addCategorizedPackageToFaviorite(
+                packageId,
+                canteenName,
+                mainCourse,
+                sideCourse,
+                specials,
+                availableTime,
+                ratePerDay,
+                ratePerMonth,
+                category,
+                image,
+                city,
+              )}>
+              <AddIcon />
+            </IconButton>
           </Tooltip>
 
           <Tooltip title='show more details' sx={{ textAlign: 'center' }}>
@@ -220,7 +220,20 @@ const RecipeReviewCard: React.FC<Props> = ({
               Rate perMonth:<span style={{ fontWeight: 800, color: "text.secondary", marginLeft: 2 }}>{ratePerMonth}</span>
             </Typography>
             <Tooltip title="click here to Add ">
-              <IconButton aria-label="add" sx={{ marginLeft: '100px', marginTop: 3 }}>
+              <IconButton aria-label="add to favorites"
+                onClick={() => addCategorizedPackageToFaviorite(
+                  packageId,
+                  canteenName,
+                  mainCourse,
+                  sideCourse,
+                  specials,
+                  availableTime,
+                  ratePerDay,
+                  ratePerMonth,
+                  category,
+                  image,
+                  city,
+                )}>
                 <AddIcon />
               </IconButton>
             </Tooltip>

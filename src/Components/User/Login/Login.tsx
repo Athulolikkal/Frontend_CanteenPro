@@ -204,6 +204,8 @@ export const Login = () => {
                             toast('login success', {
                               icon: '👏',
                             });
+                            localStorage.setItem('userAccessToken',res?.data?.accessToken)
+                            localStorage.setItem('userRefreshToken',res?.data?.refreshToken)
                             dispatch(isUser(res?.data?.accessToken))
                             dispatch(addUserInfo(res?.data?.userInfo))
                             navigate('/')

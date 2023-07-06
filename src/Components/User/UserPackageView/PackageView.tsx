@@ -3,13 +3,27 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../../../Axios/axios'
 import { PackageItem } from '../../../types';
 import { Box, Typography, Button } from '@mui/material';
-
 import { PackageBox, WrapperContainer, ContainerBox, DetailsBox, CourseType, FooterBox } from './Style'
+import { useSelector } from 'react-redux';
+import swal from 'sweetalert';
+
+interface storeType {
+    userInfo?: {
+        userId?: '',
+        name?: '',
+        email?: '',
+    }
+}
+
+
+
 
 const PackageView = () => {
     const { packageId } = useParams();
     const [packageDetails, setPackageDetails] = useState<PackageItem>({})
     const navigate = useNavigate()
+    const userData = useSelector((state: storeType) => state?.userInfo)
+
     useEffect(() => {
         const handleview = async () => {
             console.log(packageId, ':key')
@@ -25,7 +39,57 @@ const PackageView = () => {
         handleview()
     }, [])
 
-    if (packageDetails===undefined||null) {
+    const handleSave = async(packageId: string | undefined,
+        canteenId: string | undefined,
+        total: number | undefined,
+        image: string | undefined) => {
+
+        try {
+            const willContinue = await swal({
+                title: "Do you want to Save?",
+                text: "Are you sure do you want to save this package?",
+                icon: "info",
+        
+              });
+              if(willContinue){
+                
+                const userId=userData?.userId
+                const source = 'package'
+                const savedData = {
+                    userId,
+                    packageId,
+                    canteenId,
+                    source,
+                    total,
+                    image
+                  }
+                 axios.post('/wish/addtowish',savedData).then((response)=>{
+                    if(response?.data?.status===true){
+                        swal({
+                            title: "Saved!",
+                            text: "Your Package is saved. You can book this package from on my wish within 10 days!",
+                            icon: "success",
+                          });
+                    }else{
+                        swal({
+                            title: "Error!",
+                            text: "This Package is already in On-My-Wish!",
+                            icon: "warning",
+                          }); 
+                    }
+                 }).catch((err)=>console.log(err))
+              }
+            
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
+
+
+
+
+    if (packageDetails === undefined || null) {
         navigate('*')
     }
 
@@ -40,7 +104,7 @@ const PackageView = () => {
     const dinnerSpecials = packageDetails?.dinner?.specials.toString()
     return (
 
-        <Box>
+        <Box sx={{display:'flex',justifyContent:'center',flexDirection:'column',alignItems:'center'}}>
 
 
             <WrapperContainer>
@@ -65,10 +129,10 @@ const PackageView = () => {
                             {breakfastSpecials}
                         </CourseType>
                         <hr style={{ width: '100%', height: '1px' }}></hr>
-                        <CourseType sx={{ padding: 2, color: '#E4E4E4' }}>
+                        {/* <CourseType sx={{ padding: 2, color: '#E4E4E4' }}>
                             <span style={{ color: 'white', fontWeight: 'bold', marginRight: '3px' }}>Amount-perDay:</span>
                             {packageDetails?.breakfast?.ratePerDay}
-                        </CourseType>
+                        </CourseType> */}
 
                     </DetailsBox>
                 </PackageBox>
@@ -93,10 +157,10 @@ const PackageView = () => {
                             {lunchSpecials}
                         </CourseType>
                         <hr style={{ width: '100%', height: '1px' }}></hr>
-                        <CourseType sx={{ padding: 2, color: '#E4E4E4' }}>
+                        {/* <CourseType sx={{ padding: 2, color: '#E4E4E4' }}>
                             <span style={{ color: 'white', fontWeight: 'bold', marginRight: '3px' }}>Amount-perDay:</span>
                             {packageDetails?.lunch?.ratePerDay}
-                        </CourseType>
+                        </CourseType> */}
 
 
                     </DetailsBox>
@@ -121,14 +185,17 @@ const PackageView = () => {
                             {dinnerSpecials}
                         </CourseType>
                         <hr style={{ width: '100%', height: '1px' }}></hr>
-                        <CourseType sx={{ padding: 2, color: '#E4E4E4' }}>
+                        {/* <CourseType sx={{ padding: 2, color: '#E4E4E4' }}>
                             <span style={{ color: 'white', fontWeight: 'bold', marginRight: '3px' }}>Amount-perDay:</span>
                             {packageDetails?.dinner?.ratePerDay}
-                        </CourseType>
+                        </CourseType> */}
                     </DetailsBox>
                 </PackageBox>
             </WrapperContainer>
+            
+           
             <FooterBox >
+                
                 <Box sx={{ width: '100%', backgroundColor: '#17275F', borderRadius: '10px', }}>
                     <CourseType sx={{ padding: 2, color: '#E4E4E4', fontSize: '20px', fontWeight: 'bold', textAlign: 'center', }}>
                         <span style={{ color: 'white', fontWeight: 'bold', marginRight: '3px' }}>Total Amount PerMonth:</span>
@@ -137,13 +204,14 @@ const PackageView = () => {
                 </Box>
 
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 1, marginBottom: 3 }}>
-                    <Button sx={{ width: '100%', height: 'auto', padding: 2, color: '#17275F', borderColor: '#17275F' }} variant='outlined' >
+                    <Button sx={{ width: '100%', height: 'auto', padding: 2, color: '#17275F', borderColor: '#17275F' }} variant='outlined' onClick={() => handleSave(packageDetails?._id, packageDetails?.canteenId, packageDetails?.total, packageDetails?.image)} >
                         Click here to Add to your Canteen
                     </Button>
                 </Box>
-
+                
 
             </FooterBox>
+           
 
 
         </Box>

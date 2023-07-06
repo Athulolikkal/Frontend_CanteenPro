@@ -6,7 +6,7 @@ import PackageListing from '../PackageListing/PackageListing';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from '../../../Axios/axios'
+import axios,{setAccessToken} from '../../../Axios/axios'
 import { useSelector } from 'react-redux';
 import { PackageItem } from '../../../types'
 
@@ -32,7 +32,9 @@ const PackageListContainer = () => {
 
   const getPackages = async (pageNumber: number) => {
     try {
+    
       const url = `/canteen/getpackages?id=${canteen?.canteenId}&pageNumber=${pageNumber}`;
+      setAccessToken('canteen')
       const packages = await axios.get(url);
       console.log(packages, 'packages are');
       const allPackages = packages?.data?.response?.showPackages;

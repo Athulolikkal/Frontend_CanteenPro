@@ -4,14 +4,16 @@ interface canteenData{
     canteenId:string | undefined,
     canteenName:string | undefined,
     email:string | undefined,
-    image: string | undefined
+    image: string | undefined,
+    phone:number|undefined
 }
 
 const initialState:canteenData ={
     canteenId:undefined,
     canteenName:undefined,
     email:undefined,
-    image:undefined
+    image:undefined,
+    phone:undefined
     
 }
 

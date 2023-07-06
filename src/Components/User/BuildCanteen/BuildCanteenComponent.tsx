@@ -20,7 +20,6 @@ import axios from '../../../Axios/axios'
 
 
 
-
 const BuildCanteenComponent = () => {
   const [menu, setMenu] = useState<string>('breakfast')
   const [searchValue, setSearchValue] = useState<string>('')
@@ -35,7 +34,8 @@ const BuildCanteenComponent = () => {
   const packages = useSelector((state: any) => state.allPackages);
   const userInfo = useSelector((state: any) => state.userInfo);
   const userId = userInfo.userId
-  const showPackages = packages?.data?.showPackages || [];
+  const showPackages= packages?.data?.showPackages || [];
+
   const pageNumber = packages?.data?.numberOfPages || 0
 
   useEffect(() => {
@@ -43,6 +43,8 @@ const BuildCanteenComponent = () => {
   }, [menu, searchValue, dispatch]);
 
   useEffect(() => {
+   
+   
     setValues(showPackages);
   }, [showPackages]);
 

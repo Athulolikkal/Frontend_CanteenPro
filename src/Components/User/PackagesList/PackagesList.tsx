@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Box, Container, Typography } from '@mui/material';
 import RowPost from '../../User/RowPost/RowPost';
 import { PropertiesBox, PropertiesTextBox, } from './Style'
-import axios from '../../../Axios/axios';
+import axios,{setAccessToken} from '../../../Axios/axios';
 import { PackageItem } from '../../../types';
 
 
@@ -14,6 +14,8 @@ const PackagesList = () => {
     useEffect(() => {
         const getAllPackages = async () => {
             try {
+                setAccessToken('user')
+                console.log(axios.defaults.headers.common['Authorization'],'i got resultt');
                 const allPackages = await axios.get('canteen/allpackages')
                 console.log(allPackages.data.response);
                 const packages = allPackages.data.response

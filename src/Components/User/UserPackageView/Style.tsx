@@ -67,11 +67,13 @@ export const CourseType = styled(Typography)(({ theme }) => ({
 export const FooterBox = styled(Box)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'spacebetween',
+  
     flexDirection: 'column',
     marginTop: 4,
     height: 'auto',
     marginBottom: 4,
     gap: 1,
+    width:'75%',
     [theme.breakpoints.down('sm')]: {
         width: '100%',
         height: 'auto',

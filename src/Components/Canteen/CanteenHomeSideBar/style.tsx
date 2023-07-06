@@ -25,7 +25,8 @@ export const CustomBox=styled(Box)(({theme})=>({
        
         padding:'1'
        
-    }
+    },
+    
 }))
 
 export const TextBox = styled(Box)(({ theme }) => ({

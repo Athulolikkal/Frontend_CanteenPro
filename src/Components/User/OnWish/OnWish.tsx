@@ -58,20 +58,20 @@ const OnWish = () => {
       if (willDelete) {
         console.log(id, 'id is here?');
         axios.delete(`/wish/removeitem?wishid=${id}`).then((response) => {
-          if(response.status===200){
+          if (response.status === 200) {
             fetchUserWish()
           }
-         
         }).catch((err) => console.log(err))
-
       }
-
-
     } catch (err) {
       console.log(err);
     }
+  }
 
-
+  const bookPackageFromOnWish=async(wishId:string|undefined)=>{
+      navigate(`/user/wishitemview/${wishId}`)
+    
+     
   }
 
   return (
@@ -131,7 +131,7 @@ const OnWish = () => {
 
 
               <CustomButton sx={{}} onClick={() => handleRemove(item?._id)}>Remove</CustomButton>
-              <BookingButton sx={{}}>BookNow</BookingButton>
+              <BookingButton sx={{}} onClick={() => bookPackageFromOnWish(item?._id)}>BookNow</BookingButton>
 
             </Customcontainer>
 

@@ -1,10 +1,11 @@
 
 import { Box, Typography,Pagination,Stack } from '@mui/material'
 import { Customcontainer, CustomButton, BookingButton, CustomBox, TextContainer, CustomBoxText } from './Style'
-
+import swal from 'sweetalert';
 import { useEffect,useState } from 'react';
 import axios from '../../../Axios/axios';
 import { CanteenType } from '../../../types';
+
 
 
 
@@ -37,6 +38,17 @@ const ShowAllCanteens = () => {
     }
   }
 
+  const handleConnect=async()=>{
+     await swal({
+      title: "Oops can't connect now!",
+      text: "feature is coming soon!",
+      icon: "info",
+
+    });
+
+  }
+
+
   return (
     <Box sx={{ maxWidth: '100%',marginTop:'3rem',padding:5 }}>
       
@@ -54,6 +66,7 @@ const ShowAllCanteens = () => {
                 borderRadius: '100px',
                 border: '1px solid white',
                 display: 'block',
+                marginLeft:'25px'
               }}
             />
 
@@ -61,7 +74,7 @@ const ShowAllCanteens = () => {
 
           <CustomBoxText>
 
-            <Typography variant='h5' sx={{ fontWeight: '700', fontSize: '25px' }}>
+            <Typography variant='h5' sx={{ fontWeight: '700', fontSize: '25px', }}>
               {item?.canteenName}
             </Typography>
 
@@ -77,7 +90,7 @@ const ShowAllCanteens = () => {
         </TextContainer>
 
 
-        <CustomButton sx={{}}>Connect</CustomButton>
+        <CustomButton sx={{}} onClick={handleConnect}>Connect</CustomButton>
       
       </Customcontainer>
 

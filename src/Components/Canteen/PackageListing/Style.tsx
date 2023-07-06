@@ -11,15 +11,21 @@ export const Customcontainer = styled(Container)(({ theme }) => ({
    borderRadius: '15px',
    marginTop: '1rem',
    border: '1px solid #146C94',
-   "&:hover": {
-      border: '2px solid #146C94',
-   },
+   
 
    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       alignItems: 'center',
 
-   }
+   },
+   "&:hover": {
+
+      transform: 'scale(0.9)',
+      transition: 'transform 0.2s ease-in-out',
+      boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+      opacity: 0.8,
+      borderRadius: '0.5rem',
+  }
 }));
 
 export const TextContainer = styled(Box)({

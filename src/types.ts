@@ -54,10 +54,10 @@ export interface WishType {
   endDate?: string;
   status?: boolean;
   image?: string;
-  totalPerDayRate?:number;
-  breakfast?:{
-    image:string;
-    }
+  totalPerDayRate?: number;
+  breakfast?: {
+    image: string;
+  };
 }
 
 export interface categoryType {
@@ -75,3 +75,144 @@ export interface categoryType {
   packageId?: string;
 }
 
+export interface WishViewType {
+  breakfast?: {
+    mainCourse?: string[];
+    sideCourse?: string[];
+    specials?: string[];
+    availableTime?: string;
+    ratePerDay?: number;
+    ratePerMonth?: number;
+    category?: string;
+    image?: string;
+    canteenName?: string;
+    packageId?: string;
+    city?: string;
+  };
+  lunch?: {
+    mainCourse?: string[];
+    sideCourse?: string[];
+    specials?: string[];
+    availableTime?: string;
+    ratePerDay?: number;
+    ratePerMonth?: number;
+    category?: string;
+    image?: string;
+    canteenName?: string;
+    packageId?: string;
+    city?: string;
+  };
+  dinner?: {
+    mainCourse?: string[];
+    sideCourse?: string[];
+    specials?: string[];
+    availableTime?: string;
+    ratePerDay?: number;
+    ratePerMonth?: number;
+    category?: string;
+    image?: string;
+    canteenName?: string;
+    packageId?: string;
+    city?: string;
+  };
+  userId?: string;
+  source?: string;
+  total?: number;
+  status?: boolean;
+  canteenId?: string;
+  _id?: string;
+  totalPerDayRate?: number;
+  image?: string;
+  category?: string;
+  packageId?: string;
+}
+
+export interface bookingAddress {
+  Building?: string;
+  City?: string;
+  District?: string;
+  Name?: string;
+  Phonenumber?: string;
+  Pincode?: string;
+  Street?: string;
+  _id?: string;
+}
+
+export interface BookedItem {
+  bookingAmount?: number;
+  endDate?: string;
+  source?: string;
+  startDate?: string;
+  _id?: string;
+  category?: string;
+  breakfast?: {
+    availableTime?: string;
+    canteenName?: string;
+    category?: string;
+    city?: string;
+    image?: string;
+    ratePerDay?: number;
+    ratePerMonth?: number;
+    mainCourse?: string[];
+    sideCourse?: string[];
+    specials?: string[];
+    packageId?: string;
+  };
+  lunch?: {
+    availableTime?: string;
+    canteenName?: string;
+    category?: string;
+    city?: string;
+    image?: string;
+    ratePerDay?: number;
+    ratePerMonth?: number;
+    mainCourse?: string[];
+    sideCourse?: string[];
+    specials?: string[];
+    packageId?: string;
+  };
+  dinner?: {
+    availableTime?: string;
+    canteenName?: string;
+    category?: string;
+    city?: string;
+    image?: string;
+    ratePerDay?: number;
+    ratePerMonth?: number;
+    mainCourse?: string[];
+    sideCourse?: string[];
+    specials?: string[];
+    packageId?: string;
+  };
+  bookingAddress?: {
+    Building?: string;
+    City?: string;
+    District?: string;
+    Name?: string;
+    Phonenumber?: string;
+    Pincode?: string;
+    Street?: string;
+  };
+}
+
+export interface storeType {
+  canteenInfo?: {
+    canteenId?: ''
+    canteenName?: ''
+    email?: '',
+    image?: ''
+  }
+}
+
+export interface bookingDetails{
+  customizedBooking?:number;
+  packageBooked?:number;
+  totalAmount?:number;
+  totalBooking?:number;
+}
+
+export interface packageType{
+  veg?:number;
+  nonveg?:number;
+  totalPackages?:number;
+}
