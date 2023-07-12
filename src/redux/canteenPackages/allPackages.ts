@@ -19,7 +19,7 @@ const getAllPackages = createAsyncThunk(
         `/canteen/customisepackage?pagenumber=${pageNumber}&&menu=${menu}&&search=${searchValue}`
       )
       .then((response) => {
-        console.log(response?.data, "redux data");
+        // console.log(response?.data, "redux data");
         return response.data;
       }).catch((err)=>console.log(err))
   }

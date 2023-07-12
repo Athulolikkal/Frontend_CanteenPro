@@ -14,7 +14,7 @@ interface Props {
 const RowPost: React.FC<Props> = ({ packageId, img,name,price,category,city }) => {
 
   const handleClick = () => {
-    console.log(packageId);
+    // console.log(packageId);
     navigate(`/view/${packageId}`)
 
   }

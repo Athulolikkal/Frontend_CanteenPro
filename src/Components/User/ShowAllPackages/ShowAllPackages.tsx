@@ -27,7 +27,7 @@ const ShowAllPackages = () => {
   const [packages, setPackages] = useState<PackageItem[]>([])
   const navigate = useNavigate()
   const userData = useSelector((state: storeType) => state?.userInfo)
-  console.log(userData, 'userdata is that');
+  // console.log(userData, 'userdata is that');
  
   const fetchAllPackages = async (pageNumber: number) => {
     axios.get(`/canteen/fetchallpackages?pageNumber=${pageNumber}&&searchValue=${searchValue}`).then((response) => {
@@ -46,7 +46,7 @@ const ShowAllPackages = () => {
 
   const pageChange = async (event: React.ChangeEvent<unknown>, page: number) => {
     try {
-      console.log(page);
+      // console.log(page);
       fetchAllPackages(page)
     } catch (err) {
       console.log(err)
@@ -59,7 +59,7 @@ const ShowAllPackages = () => {
   }
 
   const handleView = (packageId: string | undefined) => {
-    console.log(packageId, 'packageId is this')
+    // console.log(packageId, 'packageId is this')
     navigate(`/view/${packageId}`)
   }
 
@@ -90,7 +90,7 @@ const ShowAllPackages = () => {
         }
 
         axios.post('/wish/addtowish', savedData).then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response?.data?.status === true) {
 
             swal({
@@ -109,7 +109,7 @@ const ShowAllPackages = () => {
 
 
         }).catch((err) => console.log(err))
-        console.log(savedData, 'saveClicked and data got')
+        // console.log(savedData, 'saveClicked and data got')
       }
     } catch (err) {
       console.log(err)

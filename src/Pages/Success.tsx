@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Box, styled, Button } from '@mui/material'
 import successicon from '../assets/images/Product quality-pana.png'
 import { useNavigate } from 'react-router-dom'
@@ -51,8 +51,14 @@ const CustomBox = styled(Box)(({ theme }) => ({
 
   }))
 
+ 
+
 const Success = () => {
  const navigate=useNavigate()
+ 
+ const handleGoBack=()=>{
+  navigate('/user/userhome')
+}
     return (
    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
     <CustomBox >
@@ -60,7 +66,7 @@ const Success = () => {
   
    
     <img src={successicon} alt="" style={{ maxWidth: '70%', }} />
-    <CustomButton onClick={()=>navigate('/')} >successfully placed your booking</CustomButton>
+    <CustomButton onClick={handleGoBack} >successfully added your booking</CustomButton>
     
     </CustomBox>
    </Box>

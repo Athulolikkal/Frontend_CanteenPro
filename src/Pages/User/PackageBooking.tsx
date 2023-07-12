@@ -49,7 +49,7 @@ const PackageBooking = () => {
 
   const userData = () => {
     axios.get(`/user/userdata?userId=${userId}`).then((response) => {
-      console.log(response?.data);
+      // console.log(response?.data);
       setUserAddress(response?.data?.bookingAddress)
     }).catch((err) => {
       console.log(err);
@@ -68,7 +68,7 @@ const PackageBooking = () => {
       const startingDate = dayjs(startDate)
       const endingDate = dayjs(endDate)
       const remainingDays = endingDate.diff(startingDate, 'day');
-      console.log(remainingDays);
+      // console.log(remainingDays);
       setCount(remainingDays +2)
     }
   }, [startDate, endDate])
@@ -90,8 +90,8 @@ const PackageBooking = () => {
           totalPayableAmount = bookingItem?.data?.totalPerDayRate * count;
         }
         const phoneNumber = userAddress?.Phonenumber;
-        console.log(userAddress,'useraddresss');
-        console.log(bookingItem?.data,'bookingData');
+        // console.log(userAddress,'useraddresss');
+        // console.log(bookingItem?.data,'bookingData');
         // const total = { totalPayableAmount }
         navigate('/user/otpverification', {
           state: { phoneNumber, totalPayableAmount, userAddress,startDate,endDate,count }

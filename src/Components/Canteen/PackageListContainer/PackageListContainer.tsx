@@ -24,9 +24,9 @@ const PackageListContainer = () => {
   const [PackagesList, setPackages] = useState<PackageItem[]>([]);
   const [page, setPage] = useState<number>()
   const canteen = useSelector((state: storeType) => state?.canteenInfo)
-  console.log(canteen?.canteenId);
+  // console.log(canteen?.canteenId);
   const navigate = useNavigate()
-  console.log(PackagesList)
+  // console.log(PackagesList)
 
 
 
@@ -36,7 +36,7 @@ const PackageListContainer = () => {
       const url = `/canteen/getpackages?id=${canteen?.canteenId}&pageNumber=${pageNumber}`;
       setAccessToken('canteen')
       const packages = await axios.get(url);
-      console.log(packages, 'packages are');
+      // console.log(packages, 'packages are');
       const allPackages = packages?.data?.response?.showPackages;
       setPage(packages?.data?.response?.page)
       if (allPackages) {
@@ -56,7 +56,7 @@ const PackageListContainer = () => {
 
   const pageChange = async (event: React.ChangeEvent<unknown>, page: number) => {
     try {
-      console.log(page);
+      // console.log(page);
       getPackages(page)
     } catch (err) {
       console.log(err)

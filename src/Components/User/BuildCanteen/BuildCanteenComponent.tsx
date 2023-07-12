@@ -53,7 +53,7 @@ const BuildCanteenComponent = () => {
     const selectedValue = event.target.value as string;
     setMenu(selectedValue);
 
-    console.log(selectedValue);
+    // console.log(selectedValue);
   }
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -62,7 +62,7 @@ const BuildCanteenComponent = () => {
   }
   const pageChange = async (event: React.ChangeEvent<unknown>, page: number) => {
     try {
-      console.log(page);
+      // console.log(page);
       dispatch(getAllPackages({ pageNumber: page, menu, searchValue }));
       setCurrentPage(page);
     } catch (err) {

@@ -27,10 +27,12 @@ const CanteenJwtReminder = React.lazy(() => import('./Pages/Canteen/JwtSessionEx
 const BookingFromWish = React.lazy(() => import('./Pages/User/PackageBooking'))
 const ViewItemFromWish = React.lazy(() => import('./Components/User/WishItemView/WishItemView'))
 const OtpVerification = React.lazy(() => import('./Components/User/Otp/OtpVerification'))
-const PaymentPage = React.lazy(() => import('./Components/User/UserPayment/UserPayment'))
+// const PaymentPage = React.lazy(() => import('./Components/User/UserPayment/UserPayment'))
 const CanteenAllBookings = React.lazy(() => import('./Pages/Canteen/AllBookings'))
 const BookingconfirmPage = React.lazy(() => import('./Pages/Success'))
 const DashBoard =React.lazy(()=>import('./Pages/Canteen/DashBoard'))
+const UserHome = React.lazy(()=>import('./Pages/User/UserProfilePage'))
+const RenewBookingConfiramtionAndPayment = React.lazy(()=>import('./Components/User/RenewConfirmation/RenewConfirmation'))
 
 
 
@@ -53,8 +55,8 @@ function App() {
   const user = useSelector((state: storeType) => state.userdata)
   const canteen = useSelector((state: storeType) => state?.canteenTokens)
   const isCanteen = canteen?.canteenAccessToken
-  console.log(isCanteen, 'canteenaccessToken');
-  console.log(canteen, 'canteen')
+  // console.log(isCanteen, 'canteenaccessToken');
+  // console.log(canteen, 'canteen')
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -92,8 +94,11 @@ function App() {
               <Route path='user/bookingfromwish' element={<React.Suspense fallback={<LoadingPage />}><BookingFromWish /></React.Suspense>} />
               <Route path='user/wishitemview/:wishId' element={<React.Suspense fallback={<LoadingPage />}><ViewItemFromWish /></React.Suspense>} />
               <Route path='user/otpverification' element={<React.Suspense fallback={<LoadingPage />}><OtpVerification /></React.Suspense>} />
-              <Route path='user/paymentpage' element={<React.Suspense fallback={<LoadingPage />}><PaymentPage /></React.Suspense>} />
+              {/* <Route path='user/paymentpage' element={<React.Suspense fallback={<LoadingPage />}><PaymentPage /></React.Suspense>} /> */}
               <Route path='user/paymentsuccess' element={<React.Suspense fallback={<LoadingPage />}><BookingconfirmPage /></React.Suspense>} />
+              <Route path='user/userhome' element={<React.Suspense fallback={<LoadingPage />}><UserHome /></React.Suspense>} />
+              <Route path='user/renewbookingconfirm' element={<React.Suspense fallback={<LoadingPage />}><RenewBookingConfiramtionAndPayment /></React.Suspense>} />
+              
             </Route>
             {/*-----------------------------------//userlayout-end----------------------------*/}
 

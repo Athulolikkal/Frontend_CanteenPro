@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Container, Typography, styled, Button, TextField } from '@mui/material';
-import { auth } from '../../../Firebase/Firebase.config';
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
-import userInfoReducer from '../../../redux/user/userInfoReducer';
+import { useEffect, useState } from 'react';
+import { Box, Typography, styled, Button, TextField } from '@mui/material';
+// import { auth } from '../../../Firebase/Firebase.config';
+// import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+// import userInfoReducer from '../../../redux/user/userInfoReducer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from '../../../Axios/axios';
 import { useSelector } from 'react-redux';
+import { sentOtp } from '../../../Firebase/Otp/Otp';
 const razorpay_key_id = import.meta.env.VITE_RAZORPAY_KEY_ID
 
-const ContainerBox = styled(Box)(({ theme }) => ({
+const ContainerBox = styled(Box)(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -21,7 +22,7 @@ const ContainerBox = styled(Box)(({ theme }) => ({
 
 const OtpVerification = () => {
 
-    // const [phone, setPhone] = useState<string>()
+
     const [otp, setOtp] = useState('')
     const [isConfirm, setConfirm] = useState<any>(null)
     const [isSent, setIsSent] = useState<boolean>(false)
@@ -53,28 +54,27 @@ const OtpVerification = () => {
         }, [])
 
 
-
-    const sentOtp = async () => {
-
+    const sentOtpToUser = async () => {
         try {
-
-            const recaptchaVerifier = await new RecaptchaVerifier('recaptcha', {}, auth)
-            console.log('recaptchaverified');
-            const confirmation = await signInWithPhoneNumber(auth, num, recaptchaVerifier)
-            setConfirm(confirmation)
-            setIsSent(true)
+            const confirmation = await sentOtp(num)
+            if (confirmation) {
+                setConfirm(confirmation)
+                setIsSent(true)
+            } else {
+                toast.error("failed to sent otp")
+            }
         } catch (err) {
             toast.error("failed to sent otp")
-            console.log(err, 'error on sent otp');
         }
     }
 
 
     const verifyOtp = async () => {
         try {
-            console.log(isConfirm);
+            // console.log(isConfirm);
             await isConfirm.confirm(otp)
-            console.log('otp verified')
+
+            // console.log('otp verified')
             toast('otp verified', {
                 icon: '👏',
             });
@@ -86,7 +86,8 @@ const OtpVerification = () => {
                 const isPayment = await axios.post('/wish/payment', total)
                 const orderId = isPayment?.data?.order?.id
                 const bookingId = packagebooking?.data?.booked?._id
-                console.log(bookingId, 'bookingId');
+                // console.log(bookingId, 'bookingId');
+
                 //payment integration 
 
                 const options = {
@@ -188,8 +189,8 @@ const OtpVerification = () => {
 
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-                    {isSent ? <Button variant="contained" onClick={verifyOtp} color="primary">Confirm OTP</Button> : <Button variant="outlined" onClick={sentOtp} color="primary">click here to sent OTP to your address number </Button>}
-                    {/* <Button variant="outlined" onClick={verifyOtp} color="primary">click here to sent OTP to your address number </Button> */}
+                    {isSent ? <Button variant="contained" onClick={verifyOtp} color="primary">Confirm OTP</Button> : <Button variant="outlined" onClick={sentOtpToUser} color="primary">click here to sent OTP to your address number </Button>}
+
                 </Box>
 
             </ContainerBox>

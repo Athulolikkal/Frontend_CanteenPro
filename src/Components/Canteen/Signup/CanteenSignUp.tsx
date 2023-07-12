@@ -59,9 +59,9 @@ const  CanteenSignUp = () => {
   };
 
   const onSubmit: SubmitHandler<formValues> = (data) => {
-    console.log(data, 'datas are:')
+    // console.log(data, 'datas are:')
     axios.post('/usersignup/canteensignup', data).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response?.data?.status === false) {
 
         toast.error("Email is already exists, Try new one....")

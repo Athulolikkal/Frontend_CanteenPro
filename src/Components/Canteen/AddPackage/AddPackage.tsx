@@ -88,24 +88,24 @@ const ResponsiveForm = () => {
 
 
   const onSubmit: SubmitHandler<formValues> = async (data) => {
-    console.log(data, ':is');
-    console.log(category, 'category is that');
+    // console.log(data, ':is');
+    // console.log(category, 'category is that');
 
     const file = data?.image?.[0]
-    console.log(file)
+    // console.log(file)
     if (file) {
       try {
         //geting the permission URL
         const response = await axios.get('/service/s3service')
         const url = response?.data?.url
-        console.log(url);
+        // console.log(url);
         await Axios.put(url, file, {
           headers: {
             'Content-Type': 'multipart/form-data',
           }
         })
         const imageUrl = url.split('?')[0]
-        console.log(imageUrl)
+        // console.log(imageUrl)
 
 
 
@@ -140,10 +140,10 @@ const ResponsiveForm = () => {
         const canteenId: any = canteenDetails?.canteenId
 
         const packageDetails = { breakfast, lunch, dinner, image, total, cate, canteenId }
-        console.log(packageDetails, 'package details');
+        // console.log(packageDetails, 'package details');
 
         await axios.post('/canteen/addpackages', packageDetails).then((response) => {
-          console.log(response)
+          // console.log(response)
           toast.success("successfully added your package.....")
           setTimeout(() => {
             navigate('/canteen')
@@ -152,7 +152,7 @@ const ResponsiveForm = () => {
 
       } catch (err) {
         toast.error("An error occured...... Do after some time.......")
-        console.log(err)
+        // console.log(err)
       }
 
     } else {
@@ -481,8 +481,11 @@ const ResponsiveForm = () => {
         <Grid item xs={12} sm={12}>
           <input
             type="file"
+            
             id="image-upload-input"
             {...register("image")}
+           
+            accept="image/jpeg, image/png, image/webp" 
             style={{ display: "none" }}
           />
           <label htmlFor="image-upload-input">

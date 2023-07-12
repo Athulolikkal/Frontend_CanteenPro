@@ -6,6 +6,7 @@ import { Box, Typography, Button } from '@mui/material';
 import { PackageBox, WrapperContainer, ContainerBox, DetailsBox, CourseType, FooterBox } from './Style'
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
+import ReviewContainer from '../ReviewContainer/ReviewContainer';
 
 interface storeType {
     userInfo?: {
@@ -26,10 +27,10 @@ const PackageView = () => {
 
     useEffect(() => {
         const handleview = async () => {
-            console.log(packageId, ':key')
+            // console.log(packageId, ':key')
             try {
                 const response = await axios.get('/canteen/viewpackge?id=' + packageId)
-
+                // console.log(response?.data?.response,'rsponse is that');
                 setPackageDetails(response?.data?.response)
             } catch (err) {
                 console.log(err);
@@ -211,7 +212,12 @@ const PackageView = () => {
                 
 
             </FooterBox>
+
+            {packageDetails?.review?.length>0?
+            <ReviewContainer 
+            review={packageDetails?.review}/>:''}
            
+          
 
 
         </Box>

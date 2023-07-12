@@ -12,7 +12,7 @@ const PackageView = () => {
   const navigate = useNavigate()
   useEffect(() => {
     const handleview = async () => {
-      console.log(packageId, ':key')
+      // console.log(packageId, ':key')
       try {
         const response = await axios.get('/canteen/viewpackge?id=' + packageId)
 

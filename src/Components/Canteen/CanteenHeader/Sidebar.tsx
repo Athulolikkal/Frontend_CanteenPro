@@ -71,7 +71,7 @@ const Header = () => {
   const logOut = () => {
     dispatch(canteenLogout())
     dispatch(canteenInfoClear())
-    console.log('logOut clicked');
+    // console.log('logOut clicked');
     navigate('/canteen/login')
   }
 

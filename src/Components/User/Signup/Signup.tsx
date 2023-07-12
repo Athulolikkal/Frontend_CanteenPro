@@ -67,9 +67,9 @@ const Signup = () => {
   };
 
   const onSubmit: SubmitHandler<formValues> = (data) => {
-    console.log(data, 'datas are:')
+    // console.log(data, 'datas are:')
     axios.post('/usersignup', data).then((response) => {
-      console.log(response?.data?.status)
+      // console.log(response?.data?.status)
       if (response?.data?.status === false) {
 
         toast.error("Email is already exists, Try new one....")
@@ -82,7 +82,7 @@ const Signup = () => {
         localStorage.setItem('userAccessToken', response?.data?.accessToken)
         localStorage.setItem('userRefreshToken', response?.data?.refreshToken)
         dispatch(isUser(response?.data?.accessToken))
-        console.log(response.data.userInfo, 'is the user');
+        // console.log(response.data.userInfo, 'is the user');
         dispatch(addUserInfo(response?.data?.userInfo))
         navigate('/')
       }

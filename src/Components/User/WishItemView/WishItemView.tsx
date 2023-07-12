@@ -37,7 +37,7 @@ const WishItemView = () => {
         setWishedItems(wishes)
     }, [wishes])
 
-    console.log(wishedItems, 'wished itemss')
+    // console.log(wishedItems, 'wished itemss')
     if (!packageView.data && !packageView.loading) {
         navigate('*')
     }

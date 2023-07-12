@@ -16,7 +16,7 @@ const ShowAllCanteens = () => {
   const fetchAllCanteens = async (pageNumber:number) => {
      
       axios.get(`/allcanteen/viewallcanteens?pageNumber=${pageNumber}`).then((response) => {
-        console.log(response?.data?.showCanteens);
+        // console.log(response?.data?.showCanteens);
         setAllCanteens(response?.data?.showCanteens)
         setPage(response?.data?.numberOfPages)
       
@@ -31,7 +31,7 @@ const ShowAllCanteens = () => {
 
   const pageChange = async (event: React.ChangeEvent<unknown>, page: number) => {
     try {
-      console.log(page);
+      // console.log(page);
       fetchAllCanteens(page)
     } catch (err) {
       console.log(err)

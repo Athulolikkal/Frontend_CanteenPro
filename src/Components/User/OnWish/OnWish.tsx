@@ -19,15 +19,20 @@ interface storeType {
 
 const OnWish = () => {
   const [userWish, setUserWish] = useState<WishType[]>([])
+  const [loading,setLoading]=useState<boolean>(false)
   const navigate = useNavigate()
   const userData = useSelector((state: storeType) => state?.userInfo)
   const userId: string | undefined = userData?.userId
   const fetchUserWish = () => {
-
+    setLoading(true)
     axios.get(`/wish/getwish?userId=${userId}`).then((response) => {
-      console.log(response)
+      // console.log(response)
       const wishes = response?.data;
       wishes ? setUserWish(wishes) : setUserWish([])
+      setLoading(false)
+
+    }).catch((err)=>{
+      console.log(err);
     })
   }
   useEffect(() => {
@@ -56,7 +61,7 @@ const OnWish = () => {
       });
 
       if (willDelete) {
-        console.log(id, 'id is here?');
+        // console.log(id, 'id is here?');
         axios.delete(`/wish/removeitem?wishid=${id}`).then((response) => {
           if (response.status === 200) {
             fetchUserWish()
@@ -77,8 +82,12 @@ const OnWish = () => {
   return (
     <Box sx={{ maxWidth: '100%', padding: 5 }}>
       <Box sx={{ marginTop: '4rem' }}>
+     
+      {loading?(<Typography sx={{ textAlign: 'center', marginTop: '12rem', color: '#000339', fontWeight: 700 }}>
+         loading.......
+        </Typography>):
 
-        {userWish.length === 0 ? (<Typography sx={{ textAlign: 'center', marginTop: '12rem', color: '#000339', fontWeight: 700 }}>
+        userWish.length === 0 ? (<Typography sx={{ textAlign: 'center', marginTop: '12rem', color: '#000339', fontWeight: 700 }}>
           There is no saved packages.....add packages to your canteen
         </Typography>) : (
 

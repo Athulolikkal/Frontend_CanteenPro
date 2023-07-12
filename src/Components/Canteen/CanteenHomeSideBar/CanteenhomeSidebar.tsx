@@ -24,8 +24,8 @@ const CanteenHomeSideBar = () => {
   const canteenId = canteen?.canteenId
   const canteenEmail = canteen?.email
   const canteenImage = canteen?.image
-  console.log(canteenImage, 'canteenimage');
-  console.log(canteenEmail, 'canteenemail');
+  // console.log(canteenImage, 'canteenimage');
+  // console.log(canteenEmail, 'canteenemail');
   const [email, setCanteenEmail] = useState<string | undefined>(canteenEmail)
   const [image, setImage] = useState<string | undefined>(canteenImage)
   const getTotalCanteenPackages = async () => {

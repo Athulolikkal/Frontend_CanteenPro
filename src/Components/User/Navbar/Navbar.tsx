@@ -20,7 +20,7 @@ const Navbar = () => {
     });
     const dispatch = useDispatch()
     const userdetails = useSelector((state: any) => state.userInfo)
-    console.log(userdetails, 'userdetails is');
+    // console.log(userdetails, 'userdetails is');
     const navigateToLogin = () => {
         navigate('/user/login')
     }
@@ -104,7 +104,7 @@ const Navbar = () => {
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
                 {user ? <NavLink onClick={handleLogout} variant='body2'>Logout</NavLink> : <NavLink onClick={handlesignup} variant='body2'>SignUp</NavLink>}
-                {user ? <CustomButton sx={{ backgroundColor: 'white', color: '#146C94', borderColor: '#146C94', }}>{userdetails.name}</CustomButton> : <CustomButton onClick={navigateToLogin}>Login</CustomButton>}
+                {user ? <CustomButton sx={{ backgroundColor: 'white', color: '#146C94', borderColor: '#146C94', }} onClick={()=>navigate('/user/userhome')}>{userdetails.name}</CustomButton> : <CustomButton onClick={navigateToLogin}>Login</CustomButton>}
             </Box>
         </NavbarContainer>
     )

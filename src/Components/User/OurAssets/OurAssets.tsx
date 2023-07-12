@@ -12,13 +12,13 @@ const OurAssets = () => {
 const navigate=useNavigate()
 
     const viewCanteens=()=>{
-        console.log('its clickedd on viewCanteens')
+        // console.log('its clickedd on viewCanteens')
         navigate('/user/showallcanteens')
 
     }
     
     const viewPackages=()=>{
-        console.log('its clicked on viewPackages');
+        // console.log('its clicked on viewPackages');
         navigate('/user/showallpackages')
     }
  

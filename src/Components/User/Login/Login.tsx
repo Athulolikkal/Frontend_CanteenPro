@@ -62,9 +62,9 @@ export const Login = () => {
   const { errors } = formState;
 
   const onSubmit: SubmitHandler<formValues> = (data) => {
-    console.log(data)
+    // console.log(data)
     axios.post('/userlogin', data).then((res) => {
-      console.log(res, 'response after login')
+      // console.log(res, 'response after login')
       if (res?.data?.status === true) {
         toast('login success', {
           icon: '👏',
@@ -72,7 +72,7 @@ export const Login = () => {
         localStorage.setItem('userAccessToken',res?.data?.accessToken)
         localStorage.setItem('userRefreshToken',res?.data?.refreshToken)
         dispatch(isUser(res?.data?.accessToken))
-        console.log(res.data.userInfo,'is the user');
+        // console.log(res.data.userInfo,'is the user');
         dispatch(addUserInfo(res?.data?.userInfo))
         navigate('/')
       }

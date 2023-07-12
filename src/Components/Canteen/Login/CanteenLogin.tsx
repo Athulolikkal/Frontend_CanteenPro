@@ -52,9 +52,9 @@ const CanteenLogin = () => {
  
 
   const onSubmit: SubmitHandler<formValues> = (data) => {
-    console.log(data, 'datas are:')
+    // console.log(data, 'datas are:')
     axios.post('/userlogin/canteenlogin', data).then((response) => {
-      console.log(response,'responseee issss')
+      // console.log(response,'responseee issss')
       if (response?.data?.status === false) {
 
         toast.error(response?.data?.message)

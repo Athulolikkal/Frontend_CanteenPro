@@ -15,9 +15,9 @@ const PackagesList = () => {
         const getAllPackages = async () => {
             try {
                 setAccessToken('user')
-                console.log(axios.defaults.headers.common['Authorization'],'i got resultt');
+                // console.log(axios.defaults.headers.common['Authorization'],'i got resultt');
                 const allPackages = await axios.get('canteen/allpackages')
-                console.log(allPackages.data.response);
+                // console.log(allPackages.data.response);
                 const packages = allPackages.data.response
                 packages ? setAllpackages(packages) : setAllpackages([])
             } catch (err) {

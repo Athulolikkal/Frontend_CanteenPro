@@ -92,7 +92,7 @@ const BasicModal: React.FC<Props> = ({ canteenId, canteenEmail, setCanteenEmail,
         toast.error("Nothing have to edit")
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error("An error occured...... Do after some time.......")
     }
 

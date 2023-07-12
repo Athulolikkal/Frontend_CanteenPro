@@ -24,7 +24,7 @@ export interface PackageItem {
     availableTime: string;
     ratePerDay: number;
   };
-  review?: any[];
+  review?: any;
   status?: boolean;
   total?: number;
   category?: string;
@@ -139,11 +139,21 @@ export interface bookingAddress {
 }
 
 export interface BookedItem {
+  userId?: string;
+  packageId?: string;
+  canteenId?: string;
+  totalDays?: number;
+  status?: boolean;
   bookingAmount?: number;
+  totalPerDayRate?: number;
+  total?: number;
   endDate?: string;
   source?: string;
+  booked?: boolean;
   startDate?: string;
+  image?: string;
   _id?: string;
+  cancelled?: boolean;
   category?: string;
   breakfast?: {
     availableTime?: string;
@@ -197,22 +207,40 @@ export interface BookedItem {
 
 export interface storeType {
   canteenInfo?: {
-    canteenId?: ''
-    canteenName?: ''
-    email?: '',
-    image?: ''
-  }
+    canteenId?: "";
+    canteenName?: "";
+    email?: "";
+    image?: "";
+  };
 }
 
-export interface bookingDetails{
-  customizedBooking?:number;
-  packageBooked?:number;
-  totalAmount?:number;
-  totalBooking?:number;
+export interface bookingDetails {
+  customizedBooking?: number;
+  packageBooked?: number;
+  totalAmount?: number;
+  totalBooking?: number;
 }
 
-export interface packageType{
-  veg?:number;
-  nonveg?:number;
-  totalPackages?:number;
+export interface packageType {
+  veg?: number;
+  nonveg?: number;
+  totalPackages?: number;
+}
+
+export interface userType {
+  name?: string;
+  email?: string;
+  userId?: string;
+  phonenumber?: number;
+  status?: boolean;
+  image?: string;
+  bookingAddress?: {
+    Building?: string;
+    City?: string;
+    District?: string;
+    Name?: string;
+    Phonenumber?: string;
+    Pincode?: string;
+    Street?: string;
+  };
 }
